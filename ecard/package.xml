@@ -4,7 +4,7 @@
   <name>ecard</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="orsula.andrej@aivero.com">Andrej Orsula</maintainer>
+  <maintainer email="orsula.andrej@gmail.com">Andrej Orsula</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
