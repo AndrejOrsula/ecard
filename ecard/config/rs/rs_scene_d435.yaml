@@ -1,4 +1,4 @@
-camera:
+realsense_node:
   ros__parameters:
     serial_no: 827112072033
     base_frame_id: scene_d435

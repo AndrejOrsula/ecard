@@ -12,7 +12,7 @@ from launch.substitutions import ThisLaunchFileDir
 
 
 def generate_launch_description():
-    config_openvino_pipeline = LaunchConfiguration('config_openvino_pipeline', default=os.path.join(get_package_share_directory('ecard'), 'config', 'head_pose',
+    config_openvino_pipeline = LaunchConfiguration('config_openvino_pipeline', default=os.path.join(get_package_share_directory('ecard'), 'config', 'openvino',
                                                                                                     'pipeline.yaml'))
 
     return LaunchDescription([

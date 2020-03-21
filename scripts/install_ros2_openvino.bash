@@ -29,7 +29,7 @@ cd ros2_openvino_toolkit/script/
 cd ../..
 
 ## Install dependencies
-sudo apt-get install -y ros-${ROS_DISTRO}-vision-opencv ros-${ROS_DISTRO}-message-filters ros-${ROS_DISTRO}-image-common 
+sudo apt-get install -y ros-${ROS_DISTRO}-vision-opencv ros-${ROS_DISTRO}-message-filters ros-${ROS_DISTRO}-image-common
 
 ## Add source prototype to '~/.bashrc'
 echo -e "\n### ROS2 (${ROS_DISTRO}) OpenVINO" >> ~/.bashrc

@@ -1,10 +1,8 @@
 # Colcon
-install/
-log/
-build/
+**/install/
+**/log/
+**/build/
 
 # VScode
-*.code-workspace
-
-# Recordings utilised during development
-_recordings/
+**.code-workspace
+**.vscode

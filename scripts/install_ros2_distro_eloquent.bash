@@ -9,31 +9,31 @@ sudo apt-get install ros-eloquent-desktop
 
 ## Install dev tools
 sudo apt-get install -y \
-  build-essential \
-  cmake \
-  git \
-  python3-colcon-common-extensions \
-  python3-pip \
-  python-rosdep \
-  python3-vcstool \
-  wget
+build-essential \
+cmake \
+git \
+python3-colcon-common-extensions \
+python3-pip \
+python-rosdep \
+python3-vcstool \
+wget
 python3 -m pip install -U \
-  argcomplete \
-  flake8 \
-  flake8-blind-except \
-  flake8-builtins \
-  flake8-class-newline \
-  flake8-comprehensions \
-  flake8-deprecated \
-  flake8-docstrings \
-  flake8-import-order \
-  flake8-quotes \
-  pytest-repeat \
-  pytest-rerunfailures \
-  pytest \
-  pytest-cov \
-  pytest-runner \
-  setuptools
+argcomplete \
+flake8 \
+flake8-blind-except \
+flake8-builtins \
+flake8-class-newline \
+flake8-comprehensions \
+flake8-deprecated \
+flake8-docstrings \
+flake8-import-order \
+flake8-quotes \
+pytest-repeat \
+pytest-rerunfailures \
+pytest \
+pytest-cov \
+pytest-runner \
+setuptools
 
 ## Install Fast-RTPS dependencies
 sudo apt-get install --no-install-recommends -y libasio-dev libtinyxml2-dev

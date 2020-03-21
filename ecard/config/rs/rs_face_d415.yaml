@@ -1,18 +1,18 @@
-camera:
+realsense_node:
   ros__parameters:
     serial_no: 950122060455
     base_frame_id: face_d415
-    align_depth: false
+    align_depth: true
     enable_pointcloud: false
     dense_pointcloud: true
     color0:
       enabled: true
-      resolution: [1920,1080]
-      fps: 30
+      resolution: [640,480]
+      fps: 6
     depth0:
       enabled: true
-      resolution: [1280,720]
-      fps: 30
+      resolution: [640,480]
+      fps: 6
     infra1:
       enabled: false
       resolution: [640,480]
