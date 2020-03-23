@@ -29,7 +29,7 @@ def generate_launch_description():
             package='tf2_ros',
             node_executable='static_transform_publisher',
             node_name='static_transform_publisher_face_d415_to_scene_d435',
-            node_namespace="",
+            node_namespace='',
             output='screen',
             parameters=[],
             arguments=['0', '0', '0',

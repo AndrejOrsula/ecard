@@ -26,7 +26,7 @@ def generate_launch_description():
             package='realsense_node',
             node_executable='realsense_node',
             node_name='realsense_node',
-            node_namespace="",
+            node_namespace='',
             output='screen',
             parameters=[config_rs_scene_d435],
             arguments=[],

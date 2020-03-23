@@ -3,7 +3,7 @@ realsense_node:
     serial_no: 950122060455
     base_frame_id: face_d415
     align_depth: true
-    enable_pointcloud: false
+    enable_pointcloud: true
     dense_pointcloud: true
     color0:
       enabled: true

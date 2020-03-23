@@ -25,7 +25,7 @@ def generate_launch_description():
             package='dynamic_vino_sample',
             node_executable='pipeline_with_params',
             node_name='head_pose_estimator',
-            node_namespace="",
+            node_namespace='',
             output='screen',
             parameters=[],
             arguments=['-config', config_openvino_pipeline],
