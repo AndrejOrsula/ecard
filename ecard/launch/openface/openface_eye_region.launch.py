@@ -1,4 +1,4 @@
-"""Launch OpenFace Eye Region Extraction"""
+"""Launch OpenFace with eye region extraction"""
 
 import os
 from ament_index_python.packages import get_package_share_directory
@@ -15,9 +15,9 @@ def generate_launch_description():
 
     return LaunchDescription([
         Node(
-            package='eye_region_extractor',
-            node_executable='eye_region_extractor',
-            node_name='eye_region_extractor',
+            package='openface_eye_region',
+            node_executable='openface_eye_region',
+            node_name='openface_eye_region',
             node_namespace='',
             output='screen',
             remappings=[('openface/landmarks_visible', 'ecard/landmarks_visible'),

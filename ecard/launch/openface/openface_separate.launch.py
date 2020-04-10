@@ -32,6 +32,7 @@ def generate_launch_description():
             remappings=[('camera/image_raw', 'camera/color/image_raw'),
                         ('camera/camera_info', 'camera/color/camera_info'),
                         ('openface/landmarks_visible', 'ecard/landmarks_visible'),
-                        ('openface/head_pose', 'ecard/head_pose')],
+                        ('openface/head_pose', 'ecard/head_pose_raw'),
+                        ('openface/eye_landmarks_visible', 'ecard/eye_landmarks_visible')],
         ),
     ])

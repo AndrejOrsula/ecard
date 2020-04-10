@@ -3,9 +3,9 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/ros2_openface
     version: master
-  eye_region_extractor:
+  openface_rgbd_gaze_bridge:
     type: git
-    url: https://github.com/AndrejOrsula/eye_region_extractor
+    url: https://github.com/AndrejOrsula/openface_rgbd_gaze_bridge
     version: master
   rgbd_gaze:
     type: git

@@ -37,5 +37,4 @@ def generate_launch_description():
                        'face_d415', 'scene_d435'],
             remappings=[],
         ),
-
     ])
