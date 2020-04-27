@@ -5,7 +5,7 @@ project(ecard)
 find_package(ament_cmake REQUIRED)
 
 # Install directories
-install(DIRECTORY config launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY config launch users DESTINATION share/${PROJECT_NAME})
 
 # Setup the project
 ament_package()

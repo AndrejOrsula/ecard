@@ -1,23 +1,24 @@
-realsense_node:
-  ros__parameters:
-    serial_no: 827112072033
-    base_frame_id: scene_d435
-    align_depth: false
-    enable_pointcloud: false
-    dense_pointcloud: false
-    color0:
-      enabled: true
-      resolution: [1280,720]
-      fps: 15
-    depth0:
-      enabled: true
-      resolution: [1280,720]
-      fps: 15
-    infra1:
-      enabled: false
-      resolution: [640,480]
-      fps: 15
-    infra2:
-      enabled: false
-      resolution: [640,480]
-      fps: 15
+/scene_d435:
+  realsense_node:
+    ros__parameters:
+      # serial_no: 827112072033
+      base_frame_id: scene_d435
+      align_depth: true
+      enable_pointcloud: true
+      dense_pointcloud: true
+      color0:
+        enabled: true
+        resolution: [640,480]
+        fps: 6
+      depth0:
+        enabled: true
+        resolution: [640,480]
+        fps: 6
+      infra1:
+        enabled: false
+        resolution: [640,480]
+        fps: 6
+      infra2:
+        enabled: false
+        resolution: [640,480]
+        fps: 6

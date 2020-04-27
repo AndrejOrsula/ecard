@@ -1,0 +1,8 @@
+gaze_correlation:
+  ros__parameters:
+    enable:
+      plane: true
+      sphere: true
+      cylinder: true
+    publish_markers: true
+    use_sim_time: false

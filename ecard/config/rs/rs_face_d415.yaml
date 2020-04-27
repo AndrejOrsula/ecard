@@ -1,23 +1,24 @@
-realsense_node:
-  ros__parameters:
-    serial_no: 950122060455
-    base_frame_id: face_d415
-    align_depth: true
-    enable_pointcloud: true
-    dense_pointcloud: true
-    color0:
-      enabled: true
-      resolution: [640,480]
-      fps: 6
-    depth0:
-      enabled: true
-      resolution: [640,480]
-      fps: 6
-    infra1:
-      enabled: false
-      resolution: [640,480]
-      fps: 15
-    infra2:
-      enabled: false
-      resolution: [640,480]
-      fps: 15
+/face_d415:
+  realsense_node:
+    ros__parameters:
+      serial_no: 950122060455
+      base_frame_id: face_d415
+      align_depth: true
+      enable_pointcloud: true
+      dense_pointcloud: true
+      color0:
+        enabled: true
+        resolution: [1280,720]
+        fps: 6
+      depth0:
+        enabled: true
+        resolution: [1280,720]
+        fps: 6
+      infra1:
+        enabled: false
+        resolution: [640,480]
+        fps: 6
+      infra2:
+        enabled: false
+        resolution: [640,480]
+        fps: 6

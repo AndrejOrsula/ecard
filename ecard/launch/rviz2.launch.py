@@ -12,10 +12,8 @@ from launch.substitutions import ThisLaunchFileDir
 
 
 def generate_launch_description():
-
     config_rviz2 = LaunchConfiguration('config_rviz2', default=os.path.join(get_package_share_directory(
-        'ecard'), 'config', 'rviz2_default.rviz'))
-
+        'ecard'), 'config', 'rviz2.rviz'))
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
     return LaunchDescription([
@@ -23,7 +21,6 @@ def generate_launch_description():
             'config_rviz2',
             default_value=config_rviz2,
             description='Path to config for RViz2'),
-
         DeclareLaunchArgument(
             'use_sim_time',
             default_value=use_sim_time,

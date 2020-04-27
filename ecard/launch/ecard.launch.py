@@ -13,7 +13,7 @@ from launch.substitutions import ThisLaunchFileDir
 
 def generate_launch_description():
     user = LaunchConfiguration('user', default=os.path.join(get_package_share_directory(
-        'rgbd_gaze'), 'users', 'user0.yaml'))
+        'ecard'), 'users', 'user0.yaml'))
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -21,22 +21,34 @@ def generate_launch_description():
             default_value=user,
             description='Path to config for RGB-D Gaze user'),
 
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [os.path.join(get_package_share_directory('ecard'), 'launch',
+                              'rs', 'rs.launch.py')]),
+        ),
+
         # IncludeLaunchDescription(
         #     PythonLaunchDescriptionSource(
         #         [os.path.join(get_package_share_directory('ecard'), 'launch',
-        #                       'rs', 'rs.launch.py')]),
+        #                       'rgbd_gaze', 'rgbd_gaze.launch.py')]),
+        #     launch_arguments=[('user', user)],
         # ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [os.path.join(get_package_share_directory('ecard'), 'launch',
-                              'rs', 'rs_face_d415.launch.py')]),
+                              'gpf', 'gpf.launch.py')]),
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [os.path.join(get_package_share_directory('ecard'), 'launch',
+                              'gaze_correlation', 'gaze_correlation.launch.py')]),
         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [os.path.join(get_package_share_directory('rgbd_gaze'), 'launch',
-                              'rgbd_gaze.launch.py')]),
-            launch_arguments=[('user', user)],
+                              'rviz2.launch.py')]),
         ),
     ])

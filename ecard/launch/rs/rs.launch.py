@@ -15,10 +15,10 @@ def generate_launch_description():
 
     return LaunchDescription([
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [ThisLaunchFileDir(), '/rs_face_d415.launch.py']),
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(
+        #         [ThisLaunchFileDir(), '/rs_face_d415.launch.py']),
+        # ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -32,8 +32,8 @@ def generate_launch_description():
             node_namespace='',
             output='screen',
             parameters=[],
-            arguments=['0', '0', '0',
-                       '0', '0', '0',
+            arguments=['-', '0', '0',
+                       '3.14', '0', '0',
                        'face_d415', 'scene_d435'],
             remappings=[],
         ),

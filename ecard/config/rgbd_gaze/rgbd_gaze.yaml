@@ -1,0 +1,6 @@
+rgbd_gaze:
+  ros__parameters:
+    publish_compound_gaze: true
+    broadcast_tf: false
+    publish_markers: true
+    use_sim_time: false

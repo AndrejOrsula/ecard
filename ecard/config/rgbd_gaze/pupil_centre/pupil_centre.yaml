@@ -1,0 +1,4 @@
+pupil_centre:
+  ros__parameters:
+    visualise: true
+    use_sim_time: false

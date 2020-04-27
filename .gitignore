@@ -6,3 +6,7 @@
 # VScode
 **/.code-workspace
 **/.vscode
+
+# User-specific calibrations
+ecard/users/*
+!ecard/users/default.yaml
