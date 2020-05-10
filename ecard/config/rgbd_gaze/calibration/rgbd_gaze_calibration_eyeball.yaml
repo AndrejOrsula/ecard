@@ -1,0 +1,16 @@
+rgbd_gaze_calibration_eyeball:
+  ros__parameters:
+    eyeball_radius:
+      auto: true
+      auto_tolerance: 0.0001
+      min: 0.0105 # Ignored if auto: true
+      max: 0.0135 # Ignored if auto: true
+    sample_consensus:
+      use_landmark_centroids: false
+      distance_threshold: 0.005
+      probability: 0.9999
+      max_iterations: 10000
+
+    publish_eyelid_pc: true
+    publish_markers: true
+    use_sim_time: false

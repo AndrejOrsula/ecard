@@ -15,15 +15,15 @@ def generate_launch_description():
 
     return LaunchDescription([
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(
-        #         [ThisLaunchFileDir(), '/rs_face_d415.launch.py']),
-        # ),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                [ThisLaunchFileDir(), '/rs_scene_d435.launch.py']),
+                [ThisLaunchFileDir(), '/rs_face_d415.launch.py']),
         ),
+
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(
+        #         [ThisLaunchFileDir(), '/rs_scene_d435.launch.py']),
+        # ),
 
         Node(
             package='tf2_ros',

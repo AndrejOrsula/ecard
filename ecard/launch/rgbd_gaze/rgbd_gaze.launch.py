@@ -114,6 +114,7 @@ def generate_launch_description():
                         ('visualisation_markers',
                          'ecard/rgbd_gaze/visualisation_markers'),
                         ('visual_axes', 'ecard/rgbd_gaze/visual_axes'),
+                        ('optical_axes', 'ecard/rgbd_gaze/optical_axes'),
                         ('compound_gaze', 'ecard/rgbd_gaze/compound_gaze')],
         ),
     ])

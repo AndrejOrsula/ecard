@@ -1,5 +1,6 @@
 rgbd_gaze:
   ros__parameters:
+    optical_axis_origin_at_cornea_centre: true
     publish_compound_gaze: true
     broadcast_tf: false
     publish_markers: true

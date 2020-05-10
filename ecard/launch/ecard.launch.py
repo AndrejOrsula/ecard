@@ -27,24 +27,24 @@ def generate_launch_description():
                               'rs', 'rs.launch.py')]),
         ),
 
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [os.path.join(get_package_share_directory('ecard'), 'launch',
+                              'rgbd_gaze', 'rgbd_gaze.launch.py')]),
+            launch_arguments=[('user', user)],
+        ),
+
         # IncludeLaunchDescription(
         #     PythonLaunchDescriptionSource(
         #         [os.path.join(get_package_share_directory('ecard'), 'launch',
-        #                       'rgbd_gaze', 'rgbd_gaze.launch.py')]),
-        #     launch_arguments=[('user', user)],
+        #                       'gpf', 'gpf.launch.py')]),
         # ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [os.path.join(get_package_share_directory('ecard'), 'launch',
-                              'gpf', 'gpf.launch.py')]),
-        ),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [os.path.join(get_package_share_directory('ecard'), 'launch',
-                              'gaze_correlation', 'gaze_correlation.launch.py')]),
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(
+        #         [os.path.join(get_package_share_directory('ecard'), 'launch',
+        #                       'gaze_correlation', 'gaze_correlation.launch.py')]),
+        # ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(

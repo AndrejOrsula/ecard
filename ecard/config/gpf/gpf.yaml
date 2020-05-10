@@ -38,30 +38,30 @@ gpf:
         ransac_iterations: 1000
 
     sample_consensus:
-      min_segment_size: 50
+      min_segment_size: 200
       plane:
         enable: true
-        distance_threshold: 0.005
+        distance_threshold: 0.01
         probability: 0.99
         max_iterations: 1000
-        min_inlier_proportion: 0.85
+        min_inlier_proportion: 0.7
         merge_precision: 0.25
       sphere:
         enable: true
-        distance_threshold: 0.005
+        distance_threshold: 0.01
         probability: 0.99
         max_iterations: 1000
         min_inlier_proportion: 0.7
         min_radius: 0.01
-        max_radius: 0.075
+        max_radius: 0.1
       cylinder:
         enable: true
-        distance_threshold: 0.005
+        distance_threshold: 0.01
         probability: 0.99
         max_iterations: 1000
         min_inlier_proportion: 0.7
-        min_radius: 0.005
-        max_radius: 0.075
+        min_radius: 0.01
+        max_radius: 0.1
 
     publish_markers: true
     visualise: false

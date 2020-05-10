@@ -1,0 +1,10 @@
+point_publisher:
+  ros__parameters:
+    frequency: 20.0
+    frame_id: "camera_color_optical_frame"
+    position:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+
+    use_sim_time: false
