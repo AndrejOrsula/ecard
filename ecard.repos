@@ -11,3 +11,15 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/rgbd_gaze
     version: master
+  gpf:
+    type: git
+    url: https://github.com/AndrejOrsula/gpf
+    version: master
+  gaze_correlation:
+    type: git
+    url: https://github.com/AndrejOrsula/gaze_correlation
+    version: master
+  point_publisher:
+    type: git
+    url: https://github.com/AndrejOrsula/point_publisher
+    version: master
