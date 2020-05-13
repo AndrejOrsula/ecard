@@ -23,3 +23,16 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/point_publisher
     version: master
+
+  ros2_control:
+    type: git
+    url: https://github.com/ros-controls/ros2_control
+    version: eloquent
+  ros2_controllers:
+    type: git
+    url: https://github.com/ros-controls/ros2_controllers
+    version: eloquent
+  fake_joint:
+    type: git
+    url: https://github.com/JafarAbdi/fake_joint
+    version: pr-port_to_ros2
