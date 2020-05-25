@@ -61,10 +61,10 @@ const std::string NODE_NAME_MOVEIT = "ecard_moveit";
 /// The name of gaze correlation node
 const std::string NODE_NAME_GAZE_CORRELATION = "gaze_correlation";
 /// Size of the queue size used by the synchronizer in its policy
-const uint8_t SYNCHRONIZER_QUEUE_SIZE = 1;
+const uint8_t SYNCHRONIZER_QUEUE_SIZE = 50;
 
 /// Distance between end effector flange and fingertips, in metres
-const double FLANGE_TO_FINGERTIP = 0.1;
+const double FLANGE_TO_FINGERTIP = 0.05;
 
 const bool visualise_trajectories = false;
 
@@ -294,6 +294,10 @@ private:
   /// Listener of tf2 transforms
   tf2_ros::TransformListener tf2_listener_;
 
+#ifdef INFLUENCE_GAZE_CORRELATION_MODE
+  rclcpp::SyncParametersClient::SharedPtr parameters_client_;
+#endif
+
   void handle_trigger_action_service(
       const std::shared_ptr<rmw_request_id_t> request_header,
       const std::shared_ptr<std_srvs::srv::Empty::Request> request,
@@ -325,6 +329,7 @@ Ecard::Ecard(std::shared_ptr<EcardMoveIt> &ecard_moveit) : Node(NODE_NAME),
   ecard_moveit2_->move_to_named_target("home");
 
 #ifdef INFLUENCE_GAZE_CORRELATION_MODE
+  parameters_client_ = std::make_shared<rclcpp::SyncParametersClient>(this, NODE_NAME_GAZE_CORRELATION);
   // Make sure volumetric objects are correlated first for picking
   setup_correlation_for_picking();
 #endif
@@ -363,7 +368,7 @@ void Ecard::synchronized_callback(const geometry_msgs::msg::PointStamped::Shared
   }
   trigger_action_ = false;
 
-  RCLCPP_ERROR(this->get_logger(), "Received synchronized messages for processing");
+  RCLCPP_DEBUG(this->get_logger(), "Received synchronized messages for processing");
 
   if (next_action_ == "pick")
   {
@@ -410,67 +415,46 @@ bool Ecard::pick(const geometry_msgs::msg::PointStamped::SharedPtr msg_point_of_
   geometry_msgs::msg::PoseStamped pose;
   pose.header = msg_object_of_interest->header;
 
-  // TODO: remove test - forging an object
-  //
-  geometric_primitive_msgs::msg::GeometricPrimitiveStamped msg_object_of_interest_2;
-  msg_object_of_interest_2.header = msg_object_of_interest->header;
-  msg_object_of_interest_2.primitive.type = GeometricPrimitive::CYLINDER;
-  geometric_primitive_msgs::msg::Cylinder cylinder_2;
-  cylinder_2.id = 123;
-  geometry_msgs::msg::Point centre;
-  centre.x = 0.4;
-  centre.y = 0.2;
-  centre.z = 0.33;
-  cylinder_2.pose.position = centre;
-  cylinder_2.radius = 0.1;
-  cylinder_2.height = 0.3;
-  msg_object_of_interest_2.primitive.cylinder.push_back(cylinder_2);
-  //
-  //
-
   std::string post_grasp_named_pose;
 
   // Determine grasp pose based on the object
-  switch (msg_object_of_interest_2.primitive.type)
+  switch (msg_object_of_interest->primitive.type)
   {
   case GeometricPrimitive::PLANE:
     return false;
 
   case GeometricPrimitive::SPHERE:
   {
-    auto sphere = msg_object_of_interest_2.primitive.sphere[0];
+    auto sphere = msg_object_of_interest->primitive.sphere[0];
     pose.pose.position = sphere.centre;
 
     pose = transform_to_robot_base(pose);
     pose.pose.position.z += sphere.radius;
     pose.pose.position.z += FLANGE_TO_FINGERTIP;
 
-    Eigen::Quaternion<double> quat;
-    quat.FromTwoVectors(Eigen::Vector3d::UnitZ(), -Eigen::Vector3d::UnitZ());
-
+    tf2::Quaternion quat;
+    quat.setRPY(M_PI, 0, 0);
     pose.pose.orientation.x = quat.x();
     pose.pose.orientation.y = quat.y();
     pose.pose.orientation.z = quat.z();
     pose.pose.orientation.w = quat.w();
 
     grasped_object_id_ = std::to_string(sphere.id);
-    std::string post_grasp_named_pose = "home";
+    post_grasp_named_pose = "home";
   }
   break;
 
   case GeometricPrimitive::CYLINDER:
   {
-    auto cylinder = msg_object_of_interest_2.primitive.cylinder[0];
+    auto cylinder = msg_object_of_interest->primitive.cylinder[0];
     pose.pose = cylinder.pose;
 
     pose = transform_to_robot_base(pose);
     pose.pose.position.x -= cylinder.radius;
     pose.pose.position.x -= FLANGE_TO_FINGERTIP;
 
-    Eigen::Quaternion<double> quat(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
-    Eigen::Quaternion<double> rot;
-    rot.FromTwoVectors(Eigen::Vector3d::UnitZ(), Eigen::Vector3d::UnitX());
-    quat = rot * quat;
+    tf2::Quaternion quat;
+    quat.setRPY(M_PI, -M_PI_2, 0);
 
     pose.pose.orientation.x = quat.x();
     pose.pose.orientation.y = quat.y();
@@ -487,13 +471,11 @@ bool Ecard::pick(const geometry_msgs::msg::PointStamped::SharedPtr msg_point_of_
   bool res = ecard_moveit2_->move_to_pose(pose);
 
   // Add collision object attached to the end effector
-  // ecard_moveit2_->add_attached_collision_object(*msg_object_of_interest);
-  ecard_moveit2_->add_attached_collision_object(msg_object_of_interest_2);
+  ecard_moveit2_->add_attached_collision_object(*msg_object_of_interest);
 
   if (res)
   {
-    // grasped_object_ = *msg_object_of_interest;
-    grasped_object_ = msg_object_of_interest_2;
+    grasped_object_ = *msg_object_of_interest;
     return ecard_moveit2_->move_to_named_target(post_grasp_named_pose);
   }
   return false;
@@ -520,9 +502,8 @@ bool Ecard::place(const geometry_msgs::msg::PointStamped::SharedPtr msg_point_of
     pose.pose.position.z += sphere.radius;
     pose.pose.position.z += FLANGE_TO_FINGERTIP;
 
-    Eigen::Quaternion<double> quat;
-    quat.FromTwoVectors(Eigen::Vector3d::UnitZ(), -Eigen::Vector3d::UnitZ());
-
+    tf2::Quaternion quat;
+    quat.setRPY(M_PI, 0, 0);
     pose.pose.orientation.x = quat.x();
     pose.pose.orientation.y = quat.y();
     pose.pose.orientation.z = quat.z();
@@ -536,12 +517,11 @@ bool Ecard::place(const geometry_msgs::msg::PointStamped::SharedPtr msg_point_of
 
     pose = transform_to_robot_base(pose);
     pose.pose.position.z += cylinder.height / 2.0;
-    pose.pose.position.z += FLANGE_TO_FINGERTIP;
+    pose.pose.position.x -= cylinder.radius;
+    pose.pose.position.x -= FLANGE_TO_FINGERTIP;
 
-    Eigen::Quaternion<double> quat(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
-    Eigen::Quaternion<double> rot;
-    rot.FromTwoVectors(Eigen::Vector3d::UnitZ(), Eigen::Vector3d::UnitX());
-    quat = rot * quat;
+    tf2::Quaternion quat;
+    quat.setRPY(M_PI, -M_PI_2, 0);
 
     pose.pose.orientation.x = quat.x();
     pose.pose.orientation.y = quat.y();
@@ -564,11 +544,11 @@ bool Ecard::place(const geometry_msgs::msg::PointStamped::SharedPtr msg_point_of
   return false;
 }
 
+#ifdef INFLUENCE_GAZE_CORRELATION_MODE
 bool Ecard::setup_correlation_for_picking()
 {
   // Create a parameter client and wait until it is ready
-  rclcpp::SyncParametersClient::SharedPtr parameters_client = std::make_shared<rclcpp::SyncParametersClient>(this, NODE_NAME_GAZE_CORRELATION);
-  while (!parameters_client->wait_for_service(1s))
+  while (!parameters_client_->wait_for_service(1s))
   {
     if (!rclcpp::ok())
     {
@@ -584,7 +564,7 @@ bool Ecard::setup_correlation_for_picking()
   parameters.push_back(rclcpp::Parameter("enable.cylinder", true));
 
   // Set the parameters
-  std::vector<rcl_interfaces::msg::SetParametersResult> set_parameters_results = parameters_client->set_parameters(parameters);
+  std::vector<rcl_interfaces::msg::SetParametersResult> set_parameters_results = parameters_client_->set_parameters(parameters);
 
   // Make sure it was successful
   for (auto &&result : set_parameters_results)
@@ -601,8 +581,7 @@ bool Ecard::setup_correlation_for_picking()
 bool Ecard::setup_correlation_for_placing()
 {
   // Create a parameter client and wait until it is ready
-  rclcpp::SyncParametersClient::SharedPtr parameters_client = std::make_shared<rclcpp::SyncParametersClient>(this, NODE_NAME_GAZE_CORRELATION);
-  while (!parameters_client->wait_for_service(1s))
+  while (!parameters_client_->wait_for_service(1s))
   {
     if (!rclcpp::ok())
     {
@@ -618,7 +597,7 @@ bool Ecard::setup_correlation_for_placing()
   parameters.push_back(rclcpp::Parameter("enable.cylinder", false));
 
   // Set the parameters
-  std::vector<rcl_interfaces::msg::SetParametersResult> set_parameters_results = parameters_client->set_parameters(parameters);
+  std::vector<rcl_interfaces::msg::SetParametersResult> set_parameters_results = parameters_client_->set_parameters(parameters);
 
   // Make sure it was successful
   for (auto &&result : set_parameters_results)
@@ -631,6 +610,7 @@ bool Ecard::setup_correlation_for_placing()
   }
   return true;
 }
+#endif
 
 geometry_msgs::msg::PoseStamped Ecard::transform_to_robot_base(const geometry_msgs::msg::PoseStamped &pose)
 {

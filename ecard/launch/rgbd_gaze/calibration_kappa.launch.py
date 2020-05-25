@@ -16,10 +16,8 @@ def generate_launch_description():
         'ecard'), 'users', 'default.yaml'))
     config_rgbd_gaze_calibration_kappa = LaunchConfiguration('config_rgbd_gaze_calibration_kappa', default=os.path.join(get_package_share_directory(
         'ecard'), 'config', 'rgbd_gaze', 'calibration', 'rgbd_gaze_calibration_kappa.yaml'))
-
-    # Remove if not needed
-    config_point_publisher = LaunchConfiguration('config_point_publisher', default=os.path.join(get_package_share_directory(
-        'ecard'), 'config', 'rgbd_gaze', 'calibration', 'point_publisher.yaml'))
+    config_simple_marker_detector = LaunchConfiguration('config_simple_marker_detector', default=os.path.join(get_package_share_directory(
+        'ecard'), 'config', 'rgbd_gaze', 'calibration', 'simple_marker_detector.yaml'))
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -30,6 +28,10 @@ def generate_launch_description():
             'config_rgbd_gaze_calibration_kappa',
             default_value=config_rgbd_gaze_calibration_kappa,
             description='Path to config for RGB-D Gaze calibration for eyeball'),
+        DeclareLaunchArgument(
+            'config_simple_marker_detector',
+            default_value=config_simple_marker_detector,
+            description='Path to config for simple marker detector'),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -52,12 +54,17 @@ def generate_launch_description():
         ),
 
         Node(
-            package='point_publisher',
-            node_executable='point_publisher',
-            node_name='point_publisher',
+            package='simple_marker_detector',
+            node_executable='simple_marker_detector',
+            node_name='simple_marker_detector',
             node_namespace='',
             output='screen',
-            parameters=[config_point_publisher],
-            remappings=[('point', 'ecard/rgbd_gaze/scene_point')],
+            parameters=[config_simple_marker_detector],
+            remappings=[('camera/color/image_raw', 'scene_d435/camera/color/image_raw'),
+                        ('camera/aligned_depth_to_color/image_raw',
+                         'scene_d435/camera/aligned_depth_to_color/image_raw'),
+                        ('camera/aligned_depth_to_color/camera_info',
+                         'scene_d435/camera/aligned_depth_to_color/camera_info'),
+                        ('marker_centre', 'ecard/rgbd_gaze/scene_point')],
         ),
     ])

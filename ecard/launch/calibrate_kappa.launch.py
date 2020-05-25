@@ -26,7 +26,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [os.path.join(get_package_share_directory('ecard'), 'launch',
-                              'rs', 'rs_face_d415.launch.py')]),
+                              'rs', 'rs.launch.py')]),
         ),
 
         IncludeLaunchDescription(

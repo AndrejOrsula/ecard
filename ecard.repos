@@ -1,4 +1,12 @@
 repositories:
+  ros2_intel_realsense:
+    type: git
+    url: https://github.com/AndrejOrsula/ros2_intel_realsense
+    version: prefix_optical_frame_ids_with_namespace
+  vision_opencv:
+    type: git
+    url: https://github.com/AndrejOrsula/vision_opencv
+    version: eloquent
   ros2_openface:
     type: git
     url: https://github.com/AndrejOrsula/ros2_openface
@@ -23,7 +31,10 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/point_publisher
     version: master
-
+  moveit2:
+    type: git
+    url: https://github.com/ros-planning/moveit2
+    version: master
   ros2_control:
     type: git
     url: https://github.com/ros-controls/ros2_control

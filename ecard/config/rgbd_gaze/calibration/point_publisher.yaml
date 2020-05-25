@@ -1,7 +1,7 @@
 point_publisher:
   ros__parameters:
     frequency: 20.0
-    frame_id: "camera_color_optical_frame"
+    frame_id: "face_d415_camera_color_optical_frame"
     position:
       x: 0.0
       y: 0.0

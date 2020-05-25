@@ -31,6 +31,7 @@ def generate_launch_description():
             remappings=[('gaze', 'ecard/rgbd_gaze/compound_gaze'),
                         ('geometric_primitives', 'ecard/gpf/geometric_primitives'),
                         ('object_of_interest', 'ecard/gaze_correlation/object_of_interest'),
+                        ('point_of_gaze', 'ecard/gaze_correlation/point_of_gaze'),
                         ('visualisation_markers', 'ecard/gaze_correlation/visualisation_markers')],
         ),
     ])

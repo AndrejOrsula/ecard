@@ -1,7 +1,7 @@
 /scene_d435:
   realsense_node:
     ros__parameters:
-      # serial_no: 827112072033
+      serial_no: 827112072033
       base_frame_id: scene_d435
       align_depth: true
       enable_pointcloud: true

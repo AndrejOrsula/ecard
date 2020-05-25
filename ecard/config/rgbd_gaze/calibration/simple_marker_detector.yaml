@@ -1,0 +1,14 @@
+simple_marker_detector:
+  ros__parameters:
+    range:
+      hue:
+        min: 55
+        max: 85
+      saturation:
+        min: 150
+        max: 255
+      value:
+        min: 150
+        max: 255
+    visualise: true
+    use_sim_time: false
