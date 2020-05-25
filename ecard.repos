@@ -27,9 +27,9 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/gaze_correlation
     version: master
-  point_publisher:
+  ros2_simple_marker_detector:
     type: git
-    url: https://github.com/AndrejOrsula/point_publisher
+    url: https://github.com/AndrejOrsula/ros2_simple_marker_detector
     version: master
   moveit2:
     type: git
