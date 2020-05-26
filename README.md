@@ -59,7 +59,7 @@ Then source the ROS 2 workspace overlay (if not done before).
 source <awesome_ws>/install/local_setup.bash
 ```
 
-Edit RealSense [face camera config](config/rs/rs_face_d415.yaml) and [scene camera config](config/rs/rs_scene_d435.yaml) to the specific serials.
+Edit RealSense [face camera config](ecard/config/rs/rs_face_d415.yaml) and [scene camera config](ecard/config/rs/rs_scene_d435.yaml) to the specific serials.
 
 Finally, you can run the personal calibration and the stack itself.
 ```bash
